@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PSI-MIND</title>
+    <link rel="stylesheet" href="index1.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo">PSI-MIND</div>
+    <ul>
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#apropos">A propos</a></li>
+      <li><a href="#cours">Cours Intégral</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="mobile-menu">
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#apropos">A propos</a></li>
+        <li><a href="#cours">Cours Intégral</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <i id="menu-toggle" class="fa-solid fa-bars"></i>
+  </nav>
+
+  <div class="theme-toggle-bar">
+      <button id="theme-toggle" class="theme-btn">
+      <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+      <span id="theme-text">Light Mode</span>
+      </button>
+  </div>
+
+  <!-- HERO -->
+  <section id="accueil">
+    <div class="scene" id="scene">
+      <div class="spotlight"></div>
+      <div class="halo"></div>
+      <div class="halo2"></div>
+      <div class="img-circle" id="imgCircle">
+          <img src="img/chatimg1.png" id="photo" alt="hero"/>
+      </div>
+    </div>
+
+
+
+    <div class="hero-content">
+        <h1>RÉUSSIR EN PSI</h1>
+        <p>Maîtrise les concepts clés de la prépa PSI grâce à des cours clairs, structurés et orientés concours.</p>
+        <button onclick="explorercours()">EXPLORER LES COURS</button>
+
+    <!-- STATS -->
+        <div id="stats">
+            <div>
+            <h2>100+</h2>
+            <p>Cours disponibles</p>
+            </div>
+            <div>
+            <h2>100+</h2>
+            <p>Exercices corrigés</p>
+            </div>
+            <div>
+            <h2>100+</h2>
+            <p>Étudiants accompagnés</p>
+            </div>
+        </div>
+        <div id="autor">
+            <p>🏆 Créé par une ancienne étudiante en prépa PSI, passionnée par l'enseignement et la réussite de ses pairs.</p>
+        </div>
+    </div>
+  </section>
+
+  <!-- A PROPOS -->
+  <section id="apropos">
+    <div class="apropos-content">
+      <img src="img/image_about2.jpg" alt="Étudiants diplômés"/>
+      <div class="text">
+        <h2>À propos de notre plateforme</h2>
+        <p id="less-infos">
+          Bienvenue sur PSI-Mind, la plateforme pensée par une ancienne étudiante en prépa PSI
+          pour accompagner les étudiantes et étudiants dans leur parcours scientifique.
+          Notre objectif est de vous fournir des ressources claires, fiables et directement
+          orientées vers la réussite des concours d'ingénieurs, tout en rendant votre
+          apprentissage plus structuré et agréable.
+        </p>
+        <ul class="features">
+          <li>✅ Cours complets et actualisés</li>
+          <li>✅ Exercices pratiques</li>
+          <li>💡 Astuces et méthodes pour réussir</li>
+        </ul>
+        <div id="more-info" style="display: none;">
+          <p>Bienvenue sur PSI-Mind, la plateforme pensée par une ancienne étudiante en prépa PSI pour accompagner les étudiantes et étudiants dans leur parcours scientifique. Notre objectif est de vous fournir des ressources claires, fiables et directement orientées vers la réussite des concours d'ingénieurs, tout en rendant votre apprentissage plus structuré et agréable. PSI-Mind est née d'une conviction simple : chaque étudiant mérite des ressourcesde qualité, accessibles et adaptées aux exigences des concours. Que tu sois en début de prépa ou en pleine révision finale, notre plateforme t'accompagne à chaque étape avec des contenus rigoureusement sélectionnés et testés. Tu y trouveras des cours complets et actualisés, des exercices pratiques avec corrections détaillées, ainsi que des astuces et méthodes pour réussir. Tous nos contenus sont ciblés pour les concours d'ingénieurs et organisés pour une progression structurée du début à la fin de l'année.</p></p>
+        </div>
+        <button id="learn-more" onclick="savoirplus()">En savoir plus</button>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- COURS INTÉGRAL -->
+  <section id="cours">
+    <h2>COURS INTÉGRALE</h2>
+    <div class="cours-grid">
+      <div class="cours-card">
+        <div class="icon">📘</div>
+        <h3>Cours</h3>
+        <a href="cours.html">Accéder →</a>
+      </div>
+      <div class="cours-card">
+        <div class="icon">✍️</div>
+        <h3>Pratique</h3>
+        <a href="pratique.html">Accéder →</a>
+      </div>
+      <div class="cours-card">
+        <div class="icon">📋</div>
+        <h3>Résumé</h3>
+        <a href="resume.html">Accéder →</a>
+      </div>
+      <div class="cours-card">
+        <div class="icon">🏆</div>
+        <h3>Concours</h3>
+        <a href="councours.html">Accéder →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>CONTACT</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="icon" id="email-link">📧</div>
+        <h3>Email</h3>
+      </div>
+      <div class="contact-card">
+        <div class="icon" id="info-link">ℹ️</div>
+        <h3>Info</h3>
+      </div>
+      <div class="contact-card">
+        <div class="icon" id="question-link">💬</div>
+        <h3>Question</h3>
+      </div>
+      <div class="contact-card">
+        <div class="icon" id="call-link">📞</div>
+        <h3>Contact</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 PSI-MIND. Tous droits réservés. LAYLA CHMOURK</p>
+  </footer>
+  <script src="index.js"></script>
+
+</body>
+</html>
