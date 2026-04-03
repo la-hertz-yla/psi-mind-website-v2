@@ -15,7 +15,7 @@ Elle permet d’accéder facilement à des **cours**, **exercices corrigés** et
 
 ---
 
-## 📚Contenu du site
+## Contenu du site
 
 ###  Cours
 - Mathématiques  
