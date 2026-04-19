@@ -1,3 +1,59 @@
+
+// Inject shared styles for authentication buttons
+function injectAuthStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .auth-nav-btn {
+            text-decoration: none;
+            color: #00126e !important;
+            background-color: rgba(237, 237, 237, 0.47) !important;
+            padding: 6px 14px !important;
+            border-radius: 20px !important;
+            transition: all 0.3s ease !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-family: inherit !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            line-height: normal !important;
+        }
+        .auth-nav-btn:hover {
+            background-color: rgba(237, 237, 237, 0.73) !important;
+            transform: scale(1.05) !important;
+            border-color: white !important;
+        }
+        .auth-logged-in-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 4px !important;
+        }
+        .auth-username {
+            font-size: 0.8rem !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: bold !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            line-height: 1 !important;
+        }
+        .auth-btn-container {
+            display: flex !important;
+            align-items: center !important;
+            margin-left: 20px !important;
+        }
+        nav {
+            display: flex !important;
+            justify-content: space-between !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Run style injection immediately
+injectAuthStyles();
+
 // List of protected pages that require authentication
 const PROTECTED_PAGES = [
     'cours.html', 'cours_math.html', 'cours_physique.html', 'cours_si.html', 'cours_info.html', 'cours-chimie.html',
