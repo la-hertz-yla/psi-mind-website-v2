@@ -1,24 +1,15 @@
-let themeToggleBtn=document.getElementById("theme-toggle"); 
-let icon=document.getElementById("theme-toggle-icon");
-let themeText=document.getElementById("theme-text");
-let pageTag=document.querySelector(".page-tag");
-let pagdiverd=document.querySelector(".divider");
-let pageText=document.querySelector(".page-text");
-themeToggleBtn.onclick=function(){
+let themeToggleBtn = document.getElementById("theme-toggle"); 
+let icon = document.getElementById("theme-toggle-icon");
+let themeText = document.getElementById("theme-text");
+
+themeToggleBtn.onclick = function(){
     if(icon.classList.contains("fa-sun")){
         document.body.classList.add("light-theme");
-        pageTag.style.color="#000000";
-        pagdiverd.style.background=" #fafafa61";
-        pageText.style.color="#000000";
         icon.classList.remove("fa-sun");
         icon.classList.add("fa-moon");
         themeText.textContent = "Dark Mode";
-    }
-    else{
+    } else {
         document.body.classList.remove("light-theme");
-        pageTag.style.color="#fff";
-        pagdiverd.style.background="transparent";
-        pageText.style.color="#fff";
         icon.classList.remove("fa-moon");
         icon.classList.add("fa-sun");
         themeText.textContent = "Light Mode";

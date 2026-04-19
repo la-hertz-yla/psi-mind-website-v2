@@ -113,3 +113,21 @@ callLink.addEventListener("click", function(e){
     window.location.href="tel:+212605044759";
 });
 
+acceilLink=document.querySelector("a[href='#accueil']");
+aproposLink=document.querySelector("a[href='#apropos']");
+coursLink=document.querySelector("a[href='#cours']");
+contactLink=document.querySelector("a[href='#contact']");
+window.addEventListener("scroll", function(){
+    if (this.window.location=="index.html#accueil"){
+        acceilLink.style.textDecoration="underline";
+    }
+    else if (this.window.location=="index.html#apropos"){
+        aproposLink.style.textDecoration="underline";
+    }
+    else if (this.window.location=="index.html#cours"){
+        coursLink.style.textDecoration="underline";
+    }
+    else if (this.window.location=="index.html#contact"){
+        contactLink.style.textDecoration="underline";
+    }
+});

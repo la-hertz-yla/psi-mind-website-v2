@@ -482,3 +482,110 @@
         display: block;
     }
 }
+
+/* ===== LIGHT MODE ===== */
+    .light-theme {
+        background-image: linear-gradient(to right, rgba(105, 147, 253, 0.719), rgba(214, 200, 255, 0.685)),
+        url(img/dc697692968212cd59b41587fd916394.jpg) !important;
+    }
+
+    .light-theme nav {
+        background-image: linear-gradient(to right, rgb(225, 232, 255), rgba(210, 218, 255, 0.98));
+        border-bottom: 1px solid rgba(100, 120, 255, 0.2);
+    }
+
+    .light-theme nav .logo { color: #1a0060; }
+    .light-theme nav ul a { color: #2200aa; }
+    .light-theme nav ul a:hover { color: #000073; }
+
+    .light-theme .theme-btn {
+        background: rgba(0, 0, 100, 0.08);
+        border-color: rgba(0, 0, 150, 0.3);
+        color: #1a0060;
+    }
+
+/* PAGE HEADER */
+    .light-theme .page-tag {
+        color: #170171;
+        border-color: rgba(0, 33, 122, 0.4);
+    }
+    .light-theme .page-header h1 { color: #1a0060; }
+    .light-theme .page-header h1 span { color: #0044ff; }
+    .light-theme .page-header p { color: #444; }
+    .light-theme .divider { background: rgba(0, 68, 255, 0.4); }
+
+/* CONCOURS CARDS */
+    .light-theme .concours-card {
+        background: rgba(255, 255, 255, 0.516);
+        border-color: rgba(100, 120, 255, 0.25);
+        color: #1a0060;
+    }
+
+    .light-theme .concours-card:hover {
+        background: rgba(255, 255, 255, 0.621);
+        border-color: rgba(0, 68, 255, 0.3);
+        box-shadow: 0 20px 50px rgba(0, 68, 255, 0.15);
+    }
+
+    .light-theme .card-name { color: #1a0060; }
+    .light-theme .card-fullname { color: #555; }
+
+    .light-theme .info-row { color: #333; }
+    .light-theme .info-label { color: #777; }
+
+/* BADGES */
+    .light-theme .badge-top {
+        background: rgba(255, 200, 0, 0.15);
+        color: #aa8800;
+        border-color: rgba(255, 200, 0, 0.5);
+    }
+    .light-theme .badge-select {
+        background: rgba(0, 180, 80, 0.15);
+        color: #006630;
+        border-color: rgba(0, 180, 80, 0.5);
+    }
+
+/* PILLS */
+    .light-theme .matiere-pill {
+        background: rgba(0, 68, 255, 0.08);
+        color: #2200aa;
+        border-color: rgba(0, 68, 255, 0.25);
+    }
+
+/* CARD BTN */
+    .light-theme .card-btn {
+        border-color: rgba(0, 68, 255, 0.35);
+        color: #2200aa;
+        background: rgba(0, 68, 255, 0.05);
+    }
+    .light-theme .card-btn:hover {
+        background: rgba(0, 68, 255, 0.12);
+        border-color: rgba(0, 68, 255, 0.6);
+        color: #1a0060;
+    }
+
+/* STATS BANNER */
+    .light-theme .stats-banner {
+        background: rgba(255, 255, 255, 0.63);
+        border-color: rgba(100, 120, 255, 0.25);
+    }
+    .light-theme .stat-num { color: #0033cc; }
+    .light-theme .stat-label { color: #555; }
+
+/* MOBILE MENU */
+    .light-theme .mobile-menu {
+        background: linear-gradient(to bottom, rgb(220, 228, 255), rgba(200, 215, 255, 0.98));
+        border-color: rgba(100, 120, 255, 0.3);
+    }
+    .light-theme .mobile-menu ul li a { color: #1a0060; }
+    .light-theme .mobile-menu ul li a:hover {
+        background: rgba(0, 68, 255, 0.08);
+        color: #0000cc;
+    }
+
+/* FOOTER */
+    .light-theme footer {
+        background-image: linear-gradient(to right, rgb(210, 220, 255), rgba(195, 210, 255, 0.98));
+        color: #1a0060;
+        border-top-color: rgba(100, 120, 255, 0.2);
+    }

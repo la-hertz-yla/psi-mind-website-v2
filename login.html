@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PSI-MIND — Connexion</title>
+    <meta name="description" content="Connectez-vous à PSI-MIND pour accéder aux cours, exercices et résumés de la prépa PSI."/>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo">PSI-MIND</a>
+    <ul>
+      <li><a href="index.html#accueil">Accueil</a></li>
+      <li><a href="index.html#apropos">A propos</a></li>
+      <li><a href="index.html#cours">Cours Intégral</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="mobile-menu">
+      <ul>
+        <li><a href="index.html#accueil">Accueil</a></li>
+        <li><a href="index.html#apropos">A propos</a></li>
+        <li><a href="index.html#cours">Cours Intégral</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <i id="menu-toggle" class="fa-solid fa-bars"></i>
+  </nav>
+
+  <div class="theme-toggle-bar">
+    <button id="theme-toggle" class="theme-btn">
+      <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+      <span id="theme-text">Light Mode</span>
+    </button>
+  </div>
+
+  <!-- LOGIN SECTION -->
+  <div class="login-wrapper">
+    <div class="login-container">
+
+      <!-- Floating particles -->
+      <div class="login-particles" id="loginParticles"></div>
+
+      <div class="login-card">
+        <!-- Header -->
+        <div class="login-header">
+          <div class="login-icon-wrapper">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <h1>PSI-<span>MIND</span></h1>
+          <p>Connectez-vous pour accéder aux cours, exercices et résumés de la prépa PSI.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="login-tabs">
+          <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">
+            <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Connexion
+          </button>
+          <button class="tab-btn" id="tab-register" onclick="switchTab('register')">
+            <i class="fa-solid fa-user-plus"></i>&nbsp; Inscription
+          </button>
+        </div>
+
+        <!-- Message -->
+        <div class="form-message" id="formMessage"></div>
+
+        <!-- LOGIN FORM -->
+        <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <div class="input-wrapper">
+              <input type="email" id="login-email" placeholder="votre@email.com" required autocomplete="email"/>
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Mot de passe</label>
+            <div class="input-wrapper">
+              <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password"/>
+              <i class="fa-solid fa-lock"></i>
+              <button type="button" class="password-toggle" onclick="togglePassword('login-password', this)">
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="login-submit-btn" id="loginBtn">
+            SE CONNECTER
+          </button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form class="register-form" id="registerForm" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label for="register-name">Nom complet</label>
+            <div class="input-wrapper">
+              <input type="text" id="register-name" placeholder="Votre nom" required autocomplete="name"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-email">Email</label>
+            <div class="input-wrapper">
+              <input type="email" id="register-email" placeholder="votre@email.com" required autocomplete="email"/>
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Mot de passe</label>
+            <div class="input-wrapper">
+              <input type="password" id="register-password" placeholder="Min. 6 caractères" required minlength="6" autocomplete="new-password"/>
+              <i class="fa-solid fa-lock"></i>
+              <button type="button" class="password-toggle" onclick="togglePassword('register-password', this)">
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm">Confirmer le mot de passe</label>
+            <div class="input-wrapper">
+              <input type="password" id="register-confirm" placeholder="••••••••" required minlength="6" autocomplete="new-password"/>
+              <i class="fa-solid fa-shield-halved"></i>
+              <button type="button" class="password-toggle" onclick="togglePassword('register-confirm', this)">
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="login-submit-btn" id="registerBtn">
+            S'INSCRIRE
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="login-divider">
+          <span>accès</span>
+        </div>
+
+        <!-- Features -->
+        <div class="login-features">
+          <div class="login-feature-tag">📘 Cours complets</div>
+          <div class="login-feature-tag">✍️ Exercices corrigés</div>
+          <div class="login-feature-tag">📋 Résumés</div>
+          <div class="login-feature-tag">🏆 Concours</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 PSI-MIND. Tous droits réservés. LAYLA CHMOURK</p>
+  </footer>
+
+  <script src="login.js"></script>
+
+</body>
+</html>

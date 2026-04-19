@@ -56,7 +56,20 @@
     #menu-toggle {
         display: none;
     }
-
+    
+    .auth-btn-container a {
+        margin-left: auto;
+        text-decoration: none;
+        color: #00126e;
+        background-color: #ededed78;
+        padding : 5px 10px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    .auth-btn-container a:hover {
+        background-color: #edededba;
+        transform: scale(1.1);
+    }
     /* light mode */
 
     .theme-toggle-bar {
