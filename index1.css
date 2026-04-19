@@ -181,7 +181,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 100px;
+      gap: 200px;
       padding: 120px 10% 40px 10%; 
       min-height: 100vh;
     }
@@ -223,7 +223,7 @@
         pointer-events: none;
         z-index: 1;
         border-radius: 15px;
-        margin-top: 10px;
+        margin-top: 30px;
     }
 
     @keyframes spotlight-pulse {
