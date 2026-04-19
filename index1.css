@@ -425,7 +425,7 @@
       display: flex; 
       align-items: center; 
       text-align: center;
-      padding: 70px 5% 10px 5%;
+      padding: 0px 5% 10px 5%;
       min-height: 90vh;
       flex-direction:row;
       justify-content: center;
