@@ -6,14 +6,14 @@
         zoom: 0.90;
     }
 
-  @supports not (zoom: 1){
-      body{
-          transform: scale(0.90);
-          transform-origin: top center;
-          width: 111.11%;
-      }
-  }
-    
+    @supports not (zoom: 1){
+        body{
+            transform: scale(0.90);
+            transform-origin: top center;
+            width: 111.11%;
+        }
+    }
+      
     * { 
       margin:0;
       padding: 0; 
@@ -402,7 +402,7 @@
 
     }
     #autor p{
-        font-size: 1rem;
+        font-size: 1.5rem;
         color: #333;
     }
     #autor:hover{
@@ -425,7 +425,7 @@
       display: flex; 
       align-items: center; 
       text-align: center;
-      padding: 120px 5%;
+      padding: 100px 5%;
       min-height: 90vh;
       flex-direction:row;
       justify-content: center;
@@ -483,7 +483,7 @@
     /* COURS */
     #cours {
         text-align: center;
-        padding: 100px 5%;
+        padding: 90px 5% 10px 5%;
         min-height: 60vh;
         display : flex;
         flex-direction:column;
@@ -537,7 +537,7 @@
     #contact { 
         margin-top: 80px;
         text-align: center;
-        padding: 100px 5%;
+        padding: 90px 5%;
         min-height: 70vh;
         display : flex;
         flex-direction:column;
