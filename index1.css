@@ -181,8 +181,8 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 200px;
-      padding: 100px 10% 80px 10%; 
+      gap: 100px;
+      padding: 100px 20% 80px 20%; 
       min-height: 100vh;
     }
 
