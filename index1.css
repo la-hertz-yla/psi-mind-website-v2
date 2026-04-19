@@ -6,13 +6,13 @@
         zoom: 0.90;
     }
 
-@supports not (zoom: 1){
-    body{
-        transform: scale(0.90);
-        transform-origin: top center;
-        width: 111.11%;
-    }
-}
+  @supports not (zoom: 1){
+      body{
+          transform: scale(0.90);
+          transform-origin: top center;
+          width: 111.11%;
+      }
+  }
     
     * { 
       margin:0;
@@ -223,6 +223,7 @@
         pointer-events: none;
         z-index: 1;
         border-radius: 15px;
+        margin-top: 10px;
     }
 
     @keyframes spotlight-pulse {
