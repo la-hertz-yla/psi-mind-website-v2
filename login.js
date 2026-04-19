@@ -172,17 +172,14 @@ if (mobileMenu) {
 // Theme toggle Logic
 const themeBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-toggle-icon');
-const themeText = document.getElementById('theme-text');
 
 if (themeBtn) {
     themeBtn.onclick = function() {
         document.body.classList.toggle('light-theme');
         if (document.body.classList.contains('light-theme')) {
             themeIcon.classList.replace('fa-sun', 'fa-moon');
-            themeText.textContent = 'Dark Mode';
         } else {
             themeIcon.classList.replace('fa-moon', 'fa-sun');
-            themeText.textContent = 'Light Mode';
         }
     };
 }

@@ -12,13 +12,21 @@
 </head>
 <body>
   <nav>
-    <a href="index.html" class="logo">PSI-MIND</a>
-    <ul>
-      <li><a href="index.html#accueil">Accueil</a></li>
-      <li><a href="index.html#apropos">A propos</a></li>
-      <li><a href="index.html#cours">Cours Intégral</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-    </ul>
+    <div class="nav-container">
+      <a href="index.html" class="logo">PSI-MIND</a>
+      <ul>
+        <li><a href="index.html#accueil">Accueil</a></li>
+        <li><a href="index.html#apropos">A propos</a></li>
+        <li><a href="index.html#cours">Cours Intégral</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn" title="Changer le thème">
+          <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+        </button>
+      </div>
+      <i id="menu-toggle" class="fa-solid fa-bars"></i>
+    </div>
     <div class="mobile-menu">
       <ul>
         <li><a href="index.html#accueil">Accueil</a></li>
@@ -27,15 +35,7 @@
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </div>
-    <i id="menu-toggle" class="fa-solid fa-bars"></i>
   </nav>
-
-  <div class="theme-toggle-bar">
-    <button id="theme-toggle" class="theme-btn">
-      <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
-      <span id="theme-text">Light Mode</span>
-    </button>
-  </div>
 
   <!-- LOGIN SECTION -->
   <div class="login-wrapper">

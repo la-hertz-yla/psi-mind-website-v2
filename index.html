@@ -13,13 +13,21 @@
 
 <body>
   <nav>
-    <div class="logo">PSI-MIND</div>
-    <ul>
-      <li><a href="#accueil">Accueil</a></li>
-      <li><a href="#apropos">A propos</a></li>
-      <li><a href="#cours">Cours Intégral</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="nav-container">
+      <div class="logo">PSI-MIND</div>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#apropos">A propos</a></li>
+        <li><a href="#cours">Cours Intégral</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn" title="Changer le thème">
+          <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+        </button>
+      </div>
+      <i id="menu-toggle" class="fa-solid fa-bars"></i>
+    </div>
     <div class="mobile-menu">
       <ul>
         <li><a href="#accueil">Accueil</a></li>
@@ -28,115 +36,110 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
-    <i id="menu-toggle" class="fa-solid fa-bars"></i>
   </nav>
 
-  <div class="theme-toggle-bar">
-    <button id="theme-toggle" class="theme-btn">
-      <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
-      <span id="theme-text">Light Mode</span>
-    </button>
-  </div>
 
   <!-- HERO -->
   <section id="accueil">
-    <div class="scene" id="scene">
-      <div class="spotlight"></div>
-      <div class="halo"></div>
-      <div class="halo2"></div>
-      <div class="img-circle" id="imgCircle">
-        <img src="img/chatimg1.png" id="photo" alt="hero" />
-      </div>
-    </div>
-
-
-
-    <div class="hero-content">
-      <h1>RÉUSSIR EN PSI</h1>
-      <p>Maîtrise les concepts clés de la prépa PSI grâce à des cours clairs, structurés et orientés concours.</p>
-      <button onclick="explorercours()">EXPLORER LES COURS</button>
-
-      <!-- STATS -->
-      <div id="stats">
-        <div>
-          <h2>100+</h2>
-          <p>Cours disponibles</p>
-        </div>
-        <div>
-          <h2>100+</h2>
-          <p>Exercices corrigés</p>
-        </div>
-        <div>
-          <h2>100+</h2>
-          <p>Étudiants accompagnés</p>
+    <div class="section-container">
+      <div class="scene" id="scene">
+        <div class="spotlight"></div>
+        <div class="halo"></div>
+        <div class="halo2"></div>
+        <div class="img-circle" id="imgCircle">
+          <img src="img/chatimg1.png" id="photo" alt="hero" />
         </div>
       </div>
-      <div id="autor">
-        <p>🏆 Créé par une ancienne étudiante en prépa PSI, passionnée par l'enseignement et la réussite de ses pairs.
-        </p>
+
+      <div class="hero-content">
+        <h1>RÉUSSIR EN PSI</h1>
+        <p>Maîtrise les concepts clés de la prépa PSI grâce à des cours clairs, structurés et orientés concours.</p>
+        <button onclick="explorercours()">EXPLORER LES COURS</button>
+
+        <!-- STATS -->
+        <div id="stats">
+          <div>
+            <h2>100+</h2>
+            <p>Cours disponibles</p>
+          </div>
+          <div>
+            <h2>100+</h2>
+            <p>Exercices corrigés</p>
+          </div>
+          <div>
+            <h2>100+</h2>
+            <p>Étudiants accompagnés</p>
+          </div>
+        </div>
+        <div id="autor">
+          <p>🏆 Créé par une ancienne étudiante en prépa PSI, passionnée par l'enseignement et la réussite de ses pairs.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- A PROPOS -->
   <section id="apropos">
-    <div class="apropos-content">
-      <img src="img/image_about2.jpg" alt="Étudiants diplômés" />
-      <div class="text">
-        <h2>À propos de notre plateforme</h2>
-        <p id="less-infos">
-          Bienvenue sur PSI-Mind, la plateforme pensée par une ancienne étudiante en prépa PSI
-          pour accompagner les étudiantes et étudiants dans leur parcours scientifique.
-          Notre objectif est de vous fournir des ressources claires, fiables et directement
-          orientées vers la réussite des concours d'ingénieurs, tout en rendant votre
-          apprentissage plus structuré et agréable.
-        </p>
-        <ul class="features">
-          <li>✅ Cours complets et actualisés</li>
-          <li>✅ Exercices pratiques</li>
-          <li>💡 Astuces et méthodes pour réussir</li>
-        </ul>
-        <div id="more-info" style="display: none;">
-          <p>Bienvenue sur PSI-Mind, la plateforme pensée par une ancienne étudiante en prépa PSI pour accompagner les
-            étudiantes et étudiants dans leur parcours scientifique. Notre objectif est de vous fournir des ressources
-            claires, fiables et directement orientées vers la réussite des concours d'ingénieurs, tout en rendant votre
-            apprentissage plus structuré et agréable. PSI-Mind est née d'une conviction simple : chaque étudiant mérite
-            des ressourcesde qualité, accessibles et adaptées aux exigences des concours. Que tu sois en début de prépa
-            ou en pleine révision finale, notre plateforme t'accompagne à chaque étape avec des contenus rigoureusement
-            sélectionnés et testés. Tu y trouveras des cours complets et actualisés, des exercices pratiques avec
-            corrections détaillées, ainsi que des astuces et méthodes pour réussir. Tous nos contenus sont ciblés pour
-            les concours d'ingénieurs et organisés pour une progression structurée du début à la fin de l'année.</p>
+    <div class="section-container">
+      <div class="apropos-content">
+        <img src="img/image_about2.jpg" alt="Étudiants diplômés" />
+        <div class="text">
+          <h2>À propos de notre plateforme</h2>
+          <p id="less-infos">
+            Bienvenue sur PSI-Mind, la plateforme pensée par une ancienne étudiante en prépa PSI
+            pour accompagner les étudiantes et étudiants dans leur parcours scientifique.
+            Notre objectif est de vous fournir des ressources claires, fiables et directement
+            orientées vers la réussite des concours d'ingénieurs, tout en rendant votre
+            apprentissage plus structuré et agréable.
           </p>
-        </div>
-        <button id="learn-more" onclick="savoirplus()">En savoir plus</button>
+          <ul class="features">
+            <li>✅ Cours complets et actualisés</li>
+            <li>✅ Exercices pratiques</li>
+            <li>💡 Astuces et méthodes pour réussir</li>
+          </ul>
+          <div id="more-info" style="display: none;">
+            <p>Bienvenue sur PSI-Mind, la plateforme pensée par une ancienne étudiante en prépa PSI pour accompagner les
+              étudiantes et étudiants dans leur parcours scientifique. Notre objectif est de vous fournir des ressources
+              claires, fiables et directement orientées vers la réussite des concours d'ingénieurs, tout en rendant votre
+              apprentissage plus structuré et agréable. PSI-Mind est née d'une conviction simple : chaque étudiant mérite
+              des ressourcesde qualité, accessibles et adaptées aux exigences des concours. Que tu sois en début de prépa
+              ou en pleine révision finale, notre plateforme t'accompagne à chaque étape avec des contenus rigoureusement
+              sélectionnés et testés. Tu y trouveras des cours complets et actualisés, des exercices pratiques avec
+              corrections détaillées, ainsi que des astuces et méthodes pour réussir. Tous nos contenus sont ciblés pour
+              les concours d'ingénieurs et organisés pour une progression structurée du début à la fin de l'année.</p>
+          </div>
+          <button id="learn-more" onclick="savoirplus()">En savoir plus</button>
 
+        </div>
       </div>
     </div>
   </section>
 
   <!-- COURS INTÉGRAL -->
   <section id="cours">
-    <h2>COURS INTÉGRALE</h2>
-    <div class="cours-grid">
-      <div class="cours-card">
-        <div class="icon">📘</div>
-        <h3>Cours</h3>
-        <a href="cours.html">Accéder →</a>
-      </div>
-      <div class="cours-card">
-        <div class="icon">✍️</div>
-        <h3>Pratique</h3>
-        <a href="pratique.html">Accéder →</a>
-      </div>
-      <div class="cours-card">
-        <div class="icon">📋</div>
-        <h3>Résumé</h3>
-        <a href="resume.html">Accéder →</a>
-      </div>
-      <div class="cours-card">
-        <div class="icon">🏆</div>
-        <h3>Concours</h3>
-        <a href="councours.html">Accéder →</a>
+    <div class="section-container">
+      <h2>COURS INTÉGRALE</h2>
+      <div class="cours-grid">
+        <div class="cours-card">
+          <div class="icon">📘</div>
+          <h3>Cours</h3>
+          <a href="cours.html">Accéder →</a>
+        </div>
+        <div class="cours-card">
+          <div class="icon">✍️</div>
+          <h3>Pratique</h3>
+          <a href="pratique.html">Accéder →</a>
+        </div>
+        <div class="cours-card">
+          <div class="icon">📋</div>
+          <h3>Résumé</h3>
+          <a href="resume.html">Accéder →</a>
+        </div>
+        <div class="cours-card">
+          <div class="icon">🏆</div>
+          <h3>Concours</h3>
+          <a href="councours.html">Accéder →</a>
+        </div>
       </div>
     </div>
   </section>
