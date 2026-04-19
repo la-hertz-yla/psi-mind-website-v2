@@ -12,21 +12,13 @@
 </head>
 <body>
   <nav>
-    <div class="nav-container">
-      <a href="index.html" class="logo">PSI-MIND</a>
-      <ul>
-        <li><a href="index.html#accueil">Accueil</a></li>
-        <li><a href="index.html#apropos">A propos</a></li>
-        <li><a href="index.html#cours">Cours Intégral</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <button id="theme-toggle" class="theme-btn" title="Changer le thème">
-          <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
-        </button>
-      </div>
-      <i id="menu-toggle" class="fa-solid fa-bars"></i>
-    </div>
+    <a href="index.html" class="logo">PSI-MIND</a>
+    <ul>
+      <li><a href="index.html#accueil">Accueil</a></li>
+      <li><a href="index.html#apropos">A propos</a></li>
+      <li><a href="index.html#cours">Cours Intégral</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
     <div class="mobile-menu">
       <ul>
         <li><a href="index.html#accueil">Accueil</a></li>
@@ -35,7 +27,15 @@
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </div>
+    <i id="menu-toggle" class="fa-solid fa-bars"></i>
   </nav>
+
+  <div class="theme-toggle-bar">
+    <button id="theme-toggle" class="theme-btn">
+      <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+      <span id="theme-text">Light Mode</span>
+    </button>
+  </div>
 
   <!-- LOGIN SECTION -->
   <div class="login-wrapper">
@@ -85,7 +85,7 @@
               </button>
             </div>
           </div>
-          <button type="submit" class="login-submit-btn" id="loginBtn" onclick="login()">
+          <button type="submit" class="login-submit-btn" id="loginBtn">
             SE CONNECTER
           </button>
         </form>
@@ -148,9 +148,9 @@
     <p>© 2025 PSI-MIND. Tous droits réservés. LAYLA CHMOURK</p>
   </footer>
 
-  <script src="login.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="supabase.js"></script>
+  <script src="login.js"></script>
 
 </body>
 </html>

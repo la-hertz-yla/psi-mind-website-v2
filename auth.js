@@ -1,4 +1,3 @@
-
 // List of protected pages that require authentication
 const PROTECTED_PAGES = [
     'cours.html', 'cours_math.html', 'cours_physique.html', 'cours_si.html', 'cours_info.html', 'cours-chimie.html',
@@ -28,35 +27,14 @@ function loginUser(name, email) {
     localStorage.setItem('psi_mind_user', JSON.stringify(user));
 }
 
-// Unify logout for both old system and Supabase
-async function logout() {
-    // 1. Clear Supabase session if library is loaded and client initialized
-    if (window.supabase && typeof supabase !== 'undefined') {
-        try {
-            await supabase.auth.signOut();
-        } catch (e) {
-            console.error("Supabase signOut error:", e);
-        }
+// Logout user
+async function logoutUser() {
+    // Clear Supabase session if global supabase object exists
+    if (typeof supabase !== 'undefined' && supabase.auth) {
+        await supabase.auth.signOut();
     }
-
-    // 2. Clear local storage
     localStorage.removeItem('psi_mind_user');
-
-    // 3. Feedback and redirect
-    if (typeof showMessage === 'function') {
-        showMessage('Déconnexion réussie', 'success');
-    } else {
-        alert('Déconnexion réussie');
-    }
-
-    setTimeout(() => {
-        window.location.href = 'login.html';
-    }, 500);
-}
-
-// Map the old function name for compatibility if needed
-function logoutUser() {
-    logout();
+    window.location.href = 'index.html';
 }
 
 // Guard: redirect to login if not authenticated on protected pages
@@ -77,22 +55,26 @@ function injectAuthButton() {
     const nav = document.querySelector('nav');
     if (!nav) return;
 
+    // Remove existing auth container if any
+    const existing = document.querySelector('.auth-btn-container');
+    if (existing) existing.remove();
+
     // Create auth button container
     const authContainer = document.createElement('div');
     authContainer.className = 'auth-btn-container';
 
     if (isAuthenticated()) {
         const user = getCurrentUser();
-        const firstName = user.name.split(' ')[0];
+        const fullName = user.name;
 
         authContainer.innerHTML = `
-            <div class="auth-user-info">
-                <div class="auth-avatar">${firstName.charAt(0).toUpperCase()}</div>
-                <span class="auth-username">${firstName}</span>
+            <div class="auth-logged-in-wrapper">
+                <span class="auth-username">${fullName}</span>
+                <button class="auth-nav-btn auth-logout-btn" onclick="logoutUser()" title="Se déconnecter">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Déconnexion</span>
+                </button>
             </div>
-            <button class="auth-nav-btn auth-logout-btn" onclick="logoutUser()" title="Se déconnecter">
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </button>
         `;
     } else {
         authContainer.innerHTML = `
@@ -118,4 +100,3 @@ document.addEventListener('DOMContentLoaded', function () {
         injectAuthButton();
     }
 });
-
