@@ -165,7 +165,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 300px;
+      gap: 100px;
       padding: 120px 10% 40px 10%; 
       min-height: 100vh;
     }
