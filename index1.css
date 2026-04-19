@@ -425,7 +425,7 @@
       display: flex; 
       align-items: center; 
       text-align: center;
-      padding: 100px 5%;
+      padding: 90px 5% 10px 5%;
       min-height: 90vh;
       flex-direction:row;
       justify-content: center;
@@ -483,7 +483,7 @@
     /* COURS */
     #cours {
         text-align: center;
-        padding: 90px 5% 10px 5%;
+        padding: 80px 2% 10px 2%;
         min-height: 60vh;
         display : flex;
         flex-direction:column;
@@ -537,7 +537,7 @@
     #contact { 
         margin-top: 80px;
         text-align: center;
-        padding: 90px 5%;
+        padding: 10px 2% 70px 2%;
         min-height: 70vh;
         display : flex;
         flex-direction:column;
