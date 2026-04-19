@@ -176,16 +176,6 @@
     }
 
     .scene {
-        /*position: relative;
-        width: 480px;
-        height: 500px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: visible;
-        transform: scale(0.85);
-        transform-origin: center right;*/
         position: relative;
         width: 480px;
         height: 500px;
@@ -370,11 +360,11 @@
         margin-top: 50px;
         display: flex; 
         justify-content: center;
-        gap: 60px; 
+        gap: 40px; 
         text-align: center;}
     #stats div{
         background: rgba(255, 255, 255, 0.537);
-        padding: 20px 15px;
+        padding: 20px 5px;
         border-radius: 8px;
         width: clamp(130px, 15vw, 180px);
     }
