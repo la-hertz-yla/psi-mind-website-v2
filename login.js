@@ -1,3 +1,4 @@
+
 if (localStorage.getItem('psi_mind_user')) {
         const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
         localStorage.removeItem('psi_mind_redirect');
@@ -185,4 +186,63 @@ if (themeBtn) {
         }
     };
 }
-
+
+async function login() {
+    const email = document.getElementById("login-email").value
+    const password = document.getElementById("login-password").value
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+ })
+
+    if (error) {
+        showMessage(error.message, 'error');
+    } else {
+        // Clear old localStorage if any
+        localStorage.removeItem('psi_mind_user');
+        
+        // Use Supabase data or fallback to email for name if metadata is missing
+        const user = data.user;
+        const name = user.user_metadata?.full_name || user.email.split('@')[0];
+        
+        // Set local session for UI consistency across pages
+        const sessionData = {
+            name: name,
+            email: user.email,
+            id: user.id,
+            loginTime: new Date().toISOString(),
+            isSupabase: true
+        };
+        localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
+        
+        showMessage('Connexion réussie ! Redirection...', 'success');
+        
+        setTimeout(() => {
+            const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
+            localStorage.removeItem('psi_mind_redirect');
+            window.location.href = redirect;
+        }, 1000);
+    }
+}
+
+async function signup() {
+    const name = document.getElementById("register-name").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+
+    const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+            data: { full_name: name }
+        }
+    });
+
+    if (error) {
+        showMessage(error.message, 'error');
+    } else {
+        showMessage('Compte créé avec succès ! Veuillez consulter vos emails.', 'success');
+        setTimeout(() => { switchTab('login'); }, 2000);
+    }
+}

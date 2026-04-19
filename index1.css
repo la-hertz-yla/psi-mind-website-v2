@@ -57,18 +57,62 @@
         display: none;
     }
     
-    .auth-btn-container a {
+    .auth-btn-container a,
+    .auth-nav-btn {
         margin-left: auto;
         text-decoration: none;
         color: #00126e;
         background-color: #ededed78;
-        padding : 5px 10px;
+        padding : 5px 12px;
         border-radius: 20px;
         transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Nunito', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
     }
-    .auth-btn-container a:hover {
+    .auth-btn-container a:hover,
+    .auth-nav-btn:hover {
         background-color: #edededba;
-        transform: scale(1.1);
+        transform: scale(1.05);
+    }
+    
+    .auth-btn-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-left: auto;
+        margin-right: 15px;
+    }
+
+    .auth-user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: white;
+    }
+
+    .auth-avatar {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+        backdrop-filter: blur(4px);
+    }
+
+    .auth-username {
+        font-weight: 600;
+        font-size: 14px;
     }
     /* light mode */
 
@@ -784,6 +828,29 @@
 .light-theme nav .logo { color: #1a0060; }
 .light-theme nav ul a { color: #2200aa; }
 .light-theme nav ul a:hover { color: #000071; }
+
+.light-theme .auth-nav-btn,
+.light-theme .auth-btn-container a {
+    color: #1a0060;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0, 0, 100, 0.1);
+}
+
+.light-theme .auth-nav-btn:hover,
+.light-theme .auth-btn-container a:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #000071;
+}
+
+.light-theme .auth-user-info {
+    color: #1a0060;
+}
+
+.light-theme .auth-avatar {
+    background: rgba(110, 66, 243, 0.1);
+    border-color: rgba(110, 66, 243, 0.3);
+    color: #1a0060;
+}
 
 .light-theme .theme-btn {
     background: rgba(0, 0, 100, 0.08);

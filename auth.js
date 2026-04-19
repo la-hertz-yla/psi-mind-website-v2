@@ -28,10 +28,35 @@ function loginUser(name, email) {
     localStorage.setItem('psi_mind_user', JSON.stringify(user));
 }
 
-// Logout user
-function logoutUser() {
+// Unify logout for both old system and Supabase
+async function logout() {
+    // 1. Clear Supabase session if library is loaded and client initialized
+    if (window.supabase && typeof supabase !== 'undefined') {
+        try {
+            await supabase.auth.signOut();
+        } catch (e) {
+            console.error("Supabase signOut error:", e);
+        }
+    }
+
+    // 2. Clear local storage
     localStorage.removeItem('psi_mind_user');
-    window.location.href = 'index.html';
+
+    // 3. Feedback and redirect
+    if (typeof showMessage === 'function') {
+        showMessage('Déconnexion réussie', 'success');
+    } else {
+        alert('Déconnexion réussie');
+    }
+
+    setTimeout(() => {
+        window.location.href = 'login.html';
+    }, 500);
+}
+
+// Map the old function name for compatibility if needed
+function logoutUser() {
+    logout();
 }
 
 // Guard: redirect to login if not authenticated on protected pages
@@ -93,3 +118,4 @@ document.addEventListener('DOMContentLoaded', function () {
         injectAuthButton();
     }
 });
+
