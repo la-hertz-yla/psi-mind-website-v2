@@ -19,14 +19,15 @@
     nav {
       position:fixed;
       width:100%;
-      height: 70px;
+      height: 80px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 40px;
-      border-bottom: 1px solid #ccc;
+      padding: 0 5%;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
       background-image: linear-gradient(to right, rgb(2, 0, 72), rgba(31, 0, 109, 0.969) );
-      z-index: 10;
+      z-index: 1001;
+      overflow: hidden;
     }
 
     nav .logo { font-weight: bold; font-size: 1.2rem; }
@@ -164,9 +165,10 @@
 
     .scene {
         position: relative;
-        width: 500px;
-        height: 510px;
-        flex-shrink: 0;
+        width: clamp(280px, 35vw, 450px);
+        height: auto;
+        aspect-ratio: 1 / 1.05;
+        flex-shrink: 1;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -314,10 +316,14 @@
     }
 
     #accueil h1 { 
-        font-size: 3rem; 
+        font-size: clamp(1.8rem, 5vw, 3rem); 
         margin-bottom: 20px; 
     }
-    #accueil p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; }
+    #accueil p { 
+        font-size: clamp(0.95rem, 1.5vw, 1.1rem); 
+        max-width: 600px; 
+        margin: 0 auto 30px; 
+    }
     #accueil button {
       padding: 12px 30px;
       font-size: 1rem;
@@ -341,9 +347,9 @@
         text-align: center;}
     #stats div{
         background: rgba(255, 255, 255, 0.537);
-        padding: 30px 20px;
+        padding: 20px 15px;
         border-radius: 8px;
-        width: 150px;
+        width: clamp(130px, 15vw, 180px);
     }
     #stats div h2 { 
         font-size: 2.5rem; }
@@ -384,15 +390,13 @@
     /* A PROPOS */
     #apropos { 
       display: flex; 
-      gap: 50px; 
       align-items: center; 
       text-align: center;
-      padding: 100px 80px 0px 80px;
-      height: 95vh;
+      padding: 120px 5%;
+      min-height: 90vh;
       flex-direction:row;
       justify-content: center;
-      gap: 190px;
-    
+      gap: 120px;
     }
     .apropos-content {
       margin : 110px auto;
@@ -446,12 +450,12 @@
     /* COURS */
     #cours {
         text-align: center;
-        padding: 50px 0px 0px 0px;
-        height: 50vh;
+        padding: 100px 5%;
+        min-height: 60vh;
         display : flex;
         flex-direction:column;
         justify-content: center;
-        gap: 30px;
+        gap: 40px;
     }
 
     #cours h2 { 
@@ -498,10 +502,10 @@
 
     /* CONTACT */
     #contact { 
-        margin-top: 140px;
+        margin-top: 80px;
         text-align: center;
-        padding: 100px 80px 200px 0px;
-        height: 70vh;
+        padding: 100px 5%;
+        min-height: 70vh;
         display : flex;
         flex-direction:column;
         justify-content: center;
