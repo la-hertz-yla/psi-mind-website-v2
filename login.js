@@ -140,6 +140,27 @@ function togglePassword(inputId, btn) {
 
 // Menu Mobile
 const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.querySelector('.mobile-menu');
+
 if (menuToggle) {
-    menuToggle.onclick = () => document.querySelector('.mobile-menu').classList.toggle('active');
+    menuToggle.onclick = () => mobileMenu.classList.toggle('active');
+    menuToggle.addEventListener('mouseenter', () => mobileMenu.classList.add('active'));
+}
+if (mobileMenu) {
+    mobileMenu.addEventListener('mouseleave', () => mobileMenu.classList.remove('active'));
+}
+
+// Theme toggle
+const themeBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-toggle-icon');
+
+if (themeBtn) {
+    themeBtn.onclick = function() {
+        document.body.classList.toggle('light-theme');
+        if (document.body.classList.contains('light-theme')) {
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+    };
 }
