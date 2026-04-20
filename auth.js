@@ -1,7 +1,83 @@
 
 // auth.js - Gestion partagée de la session Supabase
 
-// List of protected pages that require authentication
+// Injection des styles pour le bouton d'authentification (disponible sur toutes les pages)
+function injectAuthStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .auth-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            line-height: normal;
+        }
+
+        .auth-login-btn {
+            background: linear-gradient(135deg, rgba(88, 130, 255, 0.3), rgba(140, 80, 255, 0.3));
+            border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+        }
+
+        .auth-login-btn:hover {
+            background: linear-gradient(135deg, rgba(88, 130, 255, 0.5), rgba(140, 80, 255, 0.5));
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            transform: scale(1.05);
+            color: white !important;
+        }
+
+        .auth-logout-btn {
+            background: rgba(255, 80, 80, 0.15);
+            border: 1.5px solid rgba(255, 80, 80, 0.3) !important;
+            color: rgba(255, 150, 150, 0.9) !important;
+            padding: 8px 12px;
+        }
+
+        .auth-logout-btn:hover {
+            background: rgba(255, 80, 80, 0.3);
+            border-color: rgba(255, 80, 80, 0.5) !important;
+            color: white !important;
+            transform: scale(1.05);
+        }
+
+        .auth-nav-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .auth-username {
+            font-size: 0.7rem;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .auth-logged-in-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Lancer l'injection des styles
+injectAuthStyles();
+
+// Liste des pages protégées
 const PROTECTED_PAGES = [
     'cours.html', 'cours_math.html', 'cours_physique.html', 'cours_si.html', 'cours_info.html', 'cours-chimie.html',
     'pratique.html', 'pratique_math.html', 'pratique_physique.html', 'pratique_si.html', 'pratique_info.html', 'pratique.chimie.html',
@@ -9,18 +85,15 @@ const PROTECTED_PAGES = [
     'councours.html'
 ];
 
-// Vérifier si l'utilisateur est authentifié via Supabase ou le cache local
 function isAuthenticated() {
     return localStorage.getItem('psi_mind_user') !== null;
 }
 
-// Récupérer les données de l'utilisateur actuel
 function getCurrentUser() {
     const userData = localStorage.getItem('psi_mind_user');
     return userData ? JSON.parse(userData) : null;
 }
 
-// Fonction de déconnexion
 async function logoutUser() {
     const supabase = window.supabaseClient;
     if (supabase) {
@@ -30,7 +103,6 @@ async function logoutUser() {
     window.location.href = 'index.html';
 }
 
-// Garde d'authentification : redirige vers login si non connecté
 function authGuard() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     if (PROTECTED_PAGES.includes(currentPage) && !isAuthenticated()) {
@@ -41,7 +113,6 @@ function authGuard() {
     return true;
 }
 
-// Injection dynamique du bouton de connexion/déconnexion
 function injectAuthButton() {
     const nav = document.querySelector('nav');
     if (!nav) return;
@@ -49,11 +120,7 @@ function injectAuthButton() {
     let authContainer = document.querySelector('.auth-btn-container');
     if (!authContainer) {
         authContainer = document.createElement('div');
-        authContainer.className = 'auth-btn-container';
-        // Style inline pour l'intégration rapide
-        authContainer.style.marginLeft = '20px';
-        authContainer.style.display = 'flex';
-        authContainer.style.alignItems = 'center';
+        authContainer.className = 'auth-btn-container auth-nav-container';
         
         const menuToggle = document.getElementById('menu-toggle');
         if (menuToggle) nav.insertBefore(authContainer, menuToggle);
@@ -63,23 +130,22 @@ function injectAuthButton() {
     if (isAuthenticated()) {
         const user = getCurrentUser();
         authContainer.innerHTML = `
-            <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-                <span style="font-size:0.7rem; color:white; font-weight:bold; text-transform:uppercase;">${user.name}</span>
-                <button onclick="logoutUser()" class="auth-nav-btn" style="cursor:pointer; background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:4px 10px; border-radius:15px; font-size:0.8rem;">
+            <div class="auth-logged-in-wrapper">
+                <span class="auth-username">${user.name}</span>
+                <button onclick="logoutUser()" class="auth-nav-btn auth-logout-btn">
                     <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
                 </button>
             </div>
         `;
     } else {
         authContainer.innerHTML = `
-            <a href="login.html" class="auth-nav-btn" style="text-decoration:none; background:white; color:#00126e; padding:6px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem;">
+            <a href="login.html" class="auth-nav-btn auth-login-btn">
                 <i class="fa-solid fa-user"></i> Connexion
             </a>
         `;
     }
 }
 
-// Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
     if (authGuard()) {
         injectAuthButton();
