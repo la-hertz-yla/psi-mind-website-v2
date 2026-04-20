@@ -1,4 +1,23 @@
-    * { 
+html{
+    font-size: 90%;
+    }
+
+    body{
+        zoom: 0.90;
+    }
+
+    @supports not (zoom: 1){
+        body{
+            transform: scale(0.90);
+            transform-origin: top center;
+            width: 111.11%;
+        }
+    }
+
+
+
+
+* { 
         margin:0;
         padding: 0; 
         box-sizing: border-box; 
