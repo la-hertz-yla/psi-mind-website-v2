@@ -69,19 +69,8 @@ function showMessage(text, type) {
     msg.className = 'form-message ' + type;
 }
 
-// Get stored users
-function getUsers() {
-    const data = localStorage.getItem('psi_mind_users');
-    return data ? JSON.parse(data) : [];
-}
-
-// Save users
-function saveUsers(users) {
-    localStorage.setItem('psi_mind_users', JSON.stringify(users));
-}
-
 // Handle registration
-function handleRegister(e) {
+async function handleRegister(e) {
     e.preventDefault();
 
     const name = document.getElementById('register-name').value.trim();
@@ -99,55 +88,68 @@ function handleRegister(e) {
         return;
     }
 
-    const users = getUsers();
-    if (users.find(u => u.email === email)) {
-        showMessage('Un compte existe déjà avec cet email.', 'error');
-        return;
-    }
+    try {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    full_name: name
+                }
+            }
+        });
 
-    users.push({ name, email, password });
-    saveUsers(users);
+        if (error) throw error;
 
-    showMessage('Inscription réussie ! Vous pouvez maintenant vous connecter.', 'success');
+        showMessage('Inscription réussie ! Vérifiez vos emails si nécessaire, puis connectez-vous.', 'success');
         
-    // Auto switch to login after 1.5s
-    setTimeout(() => {
-        switchTab('login');
-        document.getElementById('login-email').value = email;
-    }, 1500);
+        // Auto switch to login after 2s
+        setTimeout(() => {
+            switchTab('login');
+            document.getElementById('login-email').value = email;
+        }, 2000);
+
+    } catch (error) {
+        showMessage('Erreur : ' + error.message, 'error');
+    }
 }
 
 // Handle login
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
 
     const email = document.getElementById('login-email').value.trim().toLowerCase();
     const password = document.getElementById('login-password').value;
 
-    const users = getUsers();
-    const user = users.find(u => u.email === email && u.password === password);
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
 
-    if (!user) {
-        showMessage('Email ou mot de passe incorrect.', 'error');
-        return;
+        if (error) throw error;
+
+        // Store session for compatibility with auth.js
+        const user = data.user;
+        const sessionData = {
+            name: user.user_metadata.full_name || user.email.split('@')[0],
+            email: user.email,
+            loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
+
+        showMessage('Connexion réussie ! Redirection...', 'success');
+
+        // Redirect
+        setTimeout(() => {
+            const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
+            localStorage.removeItem('psi_mind_redirect');
+            window.location.href = redirect;
+        }, 1000);
+
+    } catch (error) {
+        showMessage('Email ou mot de passe incorrect ou erreur : ' + error.message, 'error');
     }
-
-    // Store session
-    const sessionData = {
-        name: user.name,
-        email: user.email,
-        loginTime: new Date().toISOString()
-    };
-    localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
-
-    showMessage('Connexion réussie ! Redirection...', 'success');
-
-    // Redirect
-    setTimeout(() => {
-        const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
-        localStorage.removeItem('psi_mind_redirect');
-        window.location.href = redirect;
-    }, 1000);
 }
 
 // Mobile menu toggle

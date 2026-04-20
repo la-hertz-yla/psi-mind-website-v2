@@ -85,12 +85,19 @@ function loginUser(name, email) {
 
 // Logout user
 async function logoutUser() {
-    // Clear Supabase session if global supabase object exists
-    if (typeof supabase !== 'undefined' && supabase.auth) {
-        await supabase.auth.signOut();
+    try {
+        // Clear Supabase session if global supabase object exists
+        if (typeof supabase !== 'undefined' && supabase.auth) {
+            await supabase.auth.signOut();
+        }
+    } catch (error) {
+        console.error("Erreur lors de la déconnexion Supabase:", error);
+    } finally {
+        localStorage.removeItem('psi_mind_user');
+        // Clear Supabase local storage tokens as well if needed, 
+        // though signOut usually handles this.
+        window.location.href = 'index.html';
     }
-    localStorage.removeItem('psi_mind_user');
-    window.location.href = 'index.html';
 }
 
 // Guard: redirect to login if not authenticated on protected pages
