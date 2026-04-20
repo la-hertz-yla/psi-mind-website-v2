@@ -1,83 +1,56 @@
-
-// auth.js - Gestion partagée de la session Supabase
-
-// Injection des styles pour le bouton d'authentification (disponible sur toutes les pages)
 function injectAuthStyles() {
     const style = document.createElement('style');
     style.textContent = `
         .auth-nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border: none;
-            line-height: normal;
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 16px; border-radius: 12px;
+            font-family: 'Nunito', sans-serif; font-size: 0.85rem;
+            font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none;
+            border: none; line-height: normal;
         }
-
         .auth-login-btn {
-            background: linear-gradient(135deg, rgba(88, 130, 255, 0.3), rgba(140, 80, 255, 0.3));
-            border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+            background: linear-gradient(135deg, rgba(88,130,255,0.3), rgba(140,80,255,0.3));
+            border: 1.5px solid rgba(255,255,255,0.2) !important;
             color: white !important;
         }
-
         .auth-login-btn:hover {
-            background: linear-gradient(135deg, rgba(88, 130, 255, 0.5), rgba(140, 80, 255, 0.5));
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            transform: scale(1.05);
-            color: white !important;
+            background: linear-gradient(135deg, rgba(88,130,255,0.5), rgba(140,80,255,0.5));
+            border-color: rgba(255,255,255,0.4) !important;
+            transform: scale(1.05); color: white !important;
         }
-
         .auth-logout-btn {
-            background: rgba(255, 80, 80, 0.15);
-            border: 1.5px solid rgba(255, 80, 80, 0.3) !important;
-            color: rgba(255, 150, 150, 0.9) !important;
-            padding: 8px 12px;
+            background: rgba(255,80,80,0.15);
+            border: 1.5px solid rgba(255,80,80,0.3) !important;
+            color: rgba(255,150,150,0.9) !important; padding: 8px 12px;
         }
-
         .auth-logout-btn:hover {
-            background: rgba(255, 80, 80, 0.3);
-            border-color: rgba(255, 80, 80, 0.5) !important;
-            color: white !important;
-            transform: scale(1.05);
+            background: rgba(255,80,80,0.3);
+            border-color: rgba(255,80,80,0.5) !important;
+            color: white !important; transform: scale(1.05);
         }
-
-        .auth-nav-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-left: 20px;
-        }
-
+        .auth-nav-container { display: flex; align-items: center; gap: 10px; margin-left: 20px; }
         .auth-username {
-            font-size: 0.7rem;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
+            font-size: 0.7rem; color: white; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; text-align: center;
         }
-
-        .auth-logged-in-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
+        .auth-logged-in-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     `;
     document.head.appendChild(style);
 }
-
-// Lancer l'injection des styles
 injectAuthStyles();
 
-// Liste des pages protégées
+// ✅ Bug 2 corrigé — restaurer le thème dès le chargement, sur toutes les pages
+(function applyTheme() {
+    const theme = localStorage.getItem('psi_mind_theme');
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        // Mettre à jour l'icône si elle existe (page login)
+        const icon = document.getElementById('theme-toggle-icon');
+        if (icon) icon.className = 'fa-solid fa-moon';
+    }
+})();
+
 const PROTECTED_PAGES = [
     'cours.html', 'cours_math.html', 'cours_physique.html', 'cours_si.html', 'cours_info.html', 'cours-chimie.html',
     'pratique.html', 'pratique_math.html', 'pratique_physique.html', 'pratique_si.html', 'pratique_info.html', 'pratique.chimie.html',
@@ -94,19 +67,27 @@ function getCurrentUser() {
     return userData ? JSON.parse(userData) : null;
 }
 
+// ✅ Bug 3 corrigé — vérifier que supabaseClient existe avant de l'appeler
 async function logoutUser() {
-    const supabase = window.supabaseClient;
-    if (supabase) {
-        await supabase.auth.signOut();
+    try {
+        const client = window.supabaseClient;
+        if (client) await client.auth.signOut();
+    } catch (e) {
+        console.warn('Supabase signOut error:', e);
     }
     localStorage.removeItem('psi_mind_user');
     window.location.href = 'index.html';
 }
 
+// ✅ Bug 1 corrigé — gérer les URLs avec et sans .html (Vercel)
 function authGuard() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    if (PROTECTED_PAGES.includes(currentPage) && !isAuthenticated()) {
-        localStorage.setItem('psi_mind_redirect', currentPage);
+    const path = window.location.pathname;
+    // Extrait "cours_math" depuis "/cours_math" ou "/cours_math.html"
+    let pageName = path.split('/').pop() || 'index.html';
+    if (!pageName.includes('.')) pageName += '.html'; // Vercel supprime les extensions
+
+    if (PROTECTED_PAGES.includes(pageName) && !isAuthenticated()) {
+        localStorage.setItem('psi_mind_redirect', pageName);
         window.location.href = 'login.html';
         return false;
     }
@@ -121,7 +102,6 @@ function injectAuthButton() {
     if (!authContainer) {
         authContainer = document.createElement('div');
         authContainer.className = 'auth-btn-container auth-nav-container';
-        
         const menuToggle = document.getElementById('menu-toggle');
         if (menuToggle) nav.insertBefore(authContainer, menuToggle);
         else nav.appendChild(authContainer);

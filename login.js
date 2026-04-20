@@ -1,5 +1,5 @@
-// Utilisation du client global Supabase
-const supabase = window.supabaseClient || window.supabase.createClient("https://uyhwwqlcophdvjgeucef.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5aHd3cWxjb3BoZHZqZ2V1Y2VmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2MDU2NjIsImV4cCI6MjA5MjE4MTY2Mn0.ecDNU4OyjbqP6PFclRzHd7OXGVP1eugGw-29mLdoDXc");
+// ✅ Utiliser seulement le client déjà créé dans supabase.js
+const supabase = window.supabaseClient;
 
 // Rediriger si déjà connecté
 if (localStorage.getItem('psi_mind_user')) {
@@ -8,7 +8,7 @@ if (localStorage.getItem('psi_mind_user')) {
     window.location.href = redirect;
 }
 
-// Particules flottantes pour le design
+// Particules flottantes
 function createLoginParticles() {
     const container = document.getElementById('loginParticles');
     if (!container) return;
@@ -27,7 +27,7 @@ function createLoginParticles() {
 }
 createLoginParticles();
 
-// Navigation entre Onglets (Connexion / Inscription)
+// Tabs
 function switchTab(tab) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -51,14 +51,13 @@ function switchTab(tab) {
     }
 }
 
-// Affichage des messages (Success / Error)
 function showMessage(text, type) {
     const msg = document.getElementById('formMessage');
     msg.textContent = text;
     msg.className = 'form-message ' + type;
 }
 
-// Inscription
+// ✅ Inscription corrigée avec meilleur message selon confirmation email
 async function handleRegister(e) {
     e.preventDefault();
     const name = document.getElementById('register-name').value.trim();
@@ -69,25 +68,49 @@ async function handleRegister(e) {
     if (password !== confirm) {
         return showMessage('Les mots de passe ne correspondent pas.', 'error');
     }
+    if (password.length < 6) {
+        return showMessage('Le mot de passe doit contenir au moins 6 caractères.', 'error');
+    }
+
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true;
+    btn.textContent = 'Inscription...';
 
     try {
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
-            options: {
-                data: { full_name: name }
-            }
+            options: { data: { full_name: name } }
         });
 
         if (error) throw error;
 
-        showMessage('Inscription réussie ! Vous allez être redirigé vers la connexion.', 'success');
-        setTimeout(() => {
-            switchTab('login');
-            document.getElementById('login-email').value = email;
-        }, 2000);
+        // Si Supabase renvoie un utilisateur sans session = confirmation email requise
+        if (data.user && !data.session) {
+            showMessage('✅ Inscription réussie ! Vérifiez votre email pour confirmer votre compte.', 'success');
+        } else if (data.session) {
+            // Confirmation email désactivée : connexion directe
+            showMessage('✅ Inscription réussie ! Redirection...', 'success');
+            const sessionData = {
+                name: name,
+                email: data.user.email,
+                id: data.user.id
+            };
+            localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
+            setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+        }
     } catch (error) {
-        showMessage('Erreur d\'inscription : ' + error.message, 'error');
+        // Messages d'erreur traduits
+        let msg = error.message;
+        if (msg.includes('already registered') || msg.includes('already been registered')) {
+            msg = 'Cet email est déjà utilisé. Essayez de vous connecter.';
+        } else if (msg.includes('invalid')) {
+            msg = 'Email invalide.';
+        }
+        showMessage('Erreur : ' + msg, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "S'INSCRIRE";
     }
 }
 
@@ -97,51 +120,61 @@ async function handleLogin(e) {
     const email = document.getElementById('login-email').value.trim().toLowerCase();
     const password = document.getElementById('login-password').value;
 
-    try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-        });
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.textContent = 'Connexion...';
 
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
 
-        // Synchronisation de la session locale pour le site
         const user = data.user;
         const sessionData = {
-            name: user.user_metadata.full_name || user.email.split('@')[0],
+            name: user.user_metadata?.full_name || user.email.split('@')[0],
             email: user.email,
             id: user.id
         };
         localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
+        showMessage('Connexion réussie ! Redirection...', 'success');
 
-        showMessage('Connexion réussie ! Redirection en cours...', 'success');
         setTimeout(() => {
             const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
             localStorage.removeItem('psi_mind_redirect');
             window.location.href = redirect;
         }, 1000);
     } catch (error) {
-        showMessage('Erreur de connexion : ' + error.message, 'error');
+        let msg = error.message;
+        if (msg.includes('Invalid login')) msg = 'Email ou mot de passe incorrect.';
+        if (msg.includes('Email not confirmed')) msg = 'Confirmez votre email avant de vous connecter.';
+        showMessage('Erreur : ' + msg, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'SE CONNECTER';
     }
 }
 
-// Toggle visibilité mot de passe
+// ✅ togglePassword corrigé — ajoute les icônes manquantes dynamiquement
 function togglePassword(inputId, btn) {
     const input = document.getElementById(inputId);
+    // Créer l'icône si elle n'existe pas encore
+    if (!btn.querySelector('i')) {
+        const icon = document.createElement('i');
+        icon.className = 'fa-solid fa-eye';
+        btn.appendChild(icon);
+    }
     const icon = btn.querySelector('i');
     if (input.type === 'password') {
         input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
+        icon.className = 'fa-solid fa-eye-slash';
     } else {
         input.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
+        icon.className = 'fa-solid fa-eye';
     }
 }
 
 // Menu Mobile
 const menuToggle = document.getElementById('menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
-
 if (menuToggle) {
     menuToggle.onclick = () => mobileMenu.classList.toggle('active');
     menuToggle.addEventListener('mouseenter', () => mobileMenu.classList.add('active'));
@@ -150,17 +183,25 @@ if (mobileMenu) {
     mobileMenu.addEventListener('mouseleave', () => mobileMenu.classList.remove('active'));
 }
 
-// Theme toggle
+// ✅ Theme toggle corrigé avec persistance localStorage
 const themeBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-toggle-icon');
 
+// Appliquer le thème sauvegardé au chargement
+if (localStorage.getItem('psi_mind_theme') === 'light') {
+    document.body.classList.add('light-theme');
+    if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+}
+
 if (themeBtn) {
-    themeBtn.onclick = function() {
-        document.body.classList.toggle('light-theme');
-        if (document.body.classList.contains('light-theme')) {
-            themeIcon.classList.replace('fa-sun', 'fa-moon');
+    themeBtn.onclick = function () {
+        const isLight = document.body.classList.toggle('light-theme');
+        if (isLight) {
+            themeIcon.className = 'fa-solid fa-moon';
+            localStorage.setItem('psi_mind_theme', 'light');
         } else {
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            themeIcon.className = 'fa-solid fa-sun';
+            localStorage.setItem('psi_mind_theme', 'dark');
         }
     };
 }
