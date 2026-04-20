@@ -1,10 +1,14 @@
+// Utilisation du client global Supabase
+const supabase = window.supabaseClient || window.supabase.createClient("https://uyhwwqlcophdvjgeucef.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5aHd3cWxjb3BoZHZqZ2V1Y2VmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2MDU2NjIsImV4cCI6MjA5MjE4MTY2Mn0.ecDNU4OyjbqP6PFclRzHd7OXGVP1eugGw-29mLdoDXc");
+
+// Rediriger si déjà connecté
 if (localStorage.getItem('psi_mind_user')) {
-        const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
-        localStorage.removeItem('psi_mind_redirect');
-        window.location.href = redirect;
+    const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
+    localStorage.removeItem('psi_mind_redirect');
+    window.location.href = redirect;
 }
 
-// Create floating particles
+// Particules flottantes pour le design
 function createLoginParticles() {
     const container = document.getElementById('loginParticles');
     if (!container) return;
@@ -23,7 +27,7 @@ function createLoginParticles() {
 }
 createLoginParticles();
 
-// Tab switching
+// Navigation entre Onglets (Connexion / Inscription)
 function switchTab(tab) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -47,45 +51,23 @@ function switchTab(tab) {
     }
 }
 
-// Toggle password visibility
-function togglePassword(inputId, btn) {
-    const input = document.getElementById(inputId);
-    const icon = btn.querySelector('i');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-}
-
-// Show message
+// Affichage des messages (Success / Error)
 function showMessage(text, type) {
     const msg = document.getElementById('formMessage');
     msg.textContent = text;
     msg.className = 'form-message ' + type;
 }
 
-// Handle registration
+// Inscription
 async function handleRegister(e) {
     e.preventDefault();
-
     const name = document.getElementById('register-name').value.trim();
     const email = document.getElementById('register-email').value.trim().toLowerCase();
     const password = document.getElementById('register-password').value;
     const confirm = document.getElementById('register-confirm').value;
 
     if (password !== confirm) {
-        showMessage('Les mots de passe ne correspondent pas.', 'error');
-        return;
-    }
-
-    if (password.length < 6) {
-        showMessage('Le mot de passe doit contenir au moins 6 caractères.', 'error');
-        return;
+        return showMessage('Les mots de passe ne correspondent pas.', 'error');
     }
 
     try {
@@ -93,31 +75,25 @@ async function handleRegister(e) {
             email,
             password,
             options: {
-                data: {
-                    full_name: name
-                }
+                data: { full_name: name }
             }
         });
 
         if (error) throw error;
 
-        showMessage('Inscription réussie ! Vérifiez vos emails si nécessaire, puis connectez-vous.', 'success');
-        
-        // Auto switch to login after 2s
+        showMessage('Inscription réussie ! Vous allez être redirigé vers la connexion.', 'success');
         setTimeout(() => {
             switchTab('login');
             document.getElementById('login-email').value = email;
         }, 2000);
-
     } catch (error) {
-        showMessage('Erreur : ' + error.message, 'error');
+        showMessage('Erreur d\'inscription : ' + error.message, 'error');
     }
 }
 
-// Handle login
+// Connexion
 async function handleLogin(e) {
     e.preventDefault();
-
     const email = document.getElementById('login-email').value.trim().toLowerCase();
     const password = document.getElementById('login-password').value;
 
@@ -129,62 +105,41 @@ async function handleLogin(e) {
 
         if (error) throw error;
 
-        // Store session for compatibility with auth.js
+        // Synchronisation de la session locale pour le site
         const user = data.user;
         const sessionData = {
             name: user.user_metadata.full_name || user.email.split('@')[0],
             email: user.email,
-            loginTime: new Date().toISOString()
+            id: user.id
         };
         localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
 
-        showMessage('Connexion réussie ! Redirection...', 'success');
-
-        // Redirect
+        showMessage('Connexion réussie ! Redirection en cours...', 'success');
         setTimeout(() => {
             const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
             localStorage.removeItem('psi_mind_redirect');
             window.location.href = redirect;
         }, 1000);
-
     } catch (error) {
-        showMessage('Email ou mot de passe incorrect ou erreur : ' + error.message, 'error');
+        showMessage('Erreur de connexion : ' + error.message, 'error');
     }
 }
 
-// Mobile menu toggle
+// Toggle visibilité mot de passe
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+// Menu Mobile
 const menuToggle = document.getElementById('menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
-
 if (menuToggle) {
-    menuToggle.onclick = function() {
-        mobileMenu.classList.toggle('active');
-    };
-    menuToggle.addEventListener('mouseenter', function() {
-        mobileMenu.classList.add('active');
-    });
+    menuToggle.onclick = () => document.querySelector('.mobile-menu').classList.toggle('active');
 }
-if (mobileMenu) {
-    mobileMenu.addEventListener('mouseleave', function() {
-        mobileMenu.classList.remove('active');
-    });
-}
-
-// Theme toggle Logic
-const themeBtn = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-toggle-icon');
-const themeText = document.getElementById('theme-text');
-
-if (themeBtn) {
-    themeBtn.onclick = function() {
-        document.body.classList.toggle('light-theme');
-        if (document.body.classList.contains('light-theme')) {
-            themeIcon.classList.replace('fa-sun', 'fa-moon');
-            themeText.textContent = 'Dark Mode';
-        } else {
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
-            themeText.textContent = 'Light Mode';
-        }
-    };
-}
-

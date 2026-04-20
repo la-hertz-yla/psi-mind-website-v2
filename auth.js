@@ -1,58 +1,5 @@
 
-// Inject shared styles for authentication buttons
-function injectAuthStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-        .auth-nav-btn {
-            text-decoration: none;
-            color: #00126e !important;
-            background-color: rgba(237, 237, 237, 0.47) !important;
-            padding: 6px 14px !important;
-            border-radius: 20px !important;
-            transition: all 0.3s ease !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 8px !important;
-            font-family: inherit !important;
-            font-weight: 600 !important;
-            cursor: pointer !important;
-            line-height: normal !important;
-        }
-        .auth-nav-btn:hover {
-            background-color: rgba(237, 237, 237, 0.73) !important;
-            transform: scale(1.05) !important;
-            border-color: white !important;
-        }
-        .auth-logged-in-wrapper {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 4px !important;
-        }
-        .auth-username {
-            font-size: 0.8rem !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-weight: bold !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            line-height: 1 !important;
-        }
-        .auth-btn-container {
-            display: flex !important;
-            align-items: center !important;
-            margin-left: 20px !important;
-        }
-        nav {
-            display: flex !important;
-            justify-content: space-between !important;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Run style injection immediately
-injectAuthStyles();
+// auth.js - Gestion partagée de la session Supabase
 
 // List of protected pages that require authentication
 const PROTECTED_PAGES = [
@@ -62,50 +9,31 @@ const PROTECTED_PAGES = [
     'councours.html'
 ];
 
-// Check if user is authenticated
+// Vérifier si l'utilisateur est authentifié via Supabase ou le cache local
 function isAuthenticated() {
     return localStorage.getItem('psi_mind_user') !== null;
 }
 
-// Get current user
+// Récupérer les données de l'utilisateur actuel
 function getCurrentUser() {
     const userData = localStorage.getItem('psi_mind_user');
     return userData ? JSON.parse(userData) : null;
 }
 
-// Login user
-function loginUser(name, email) {
-    const user = {
-        name: name,
-        email: email,
-        loginTime: new Date().toISOString()
-    };
-    localStorage.setItem('psi_mind_user', JSON.stringify(user));
-}
-
-// Logout user
+// Fonction de déconnexion
 async function logoutUser() {
-    try {
-        // Clear Supabase session if global supabase object exists
-        if (typeof supabase !== 'undefined' && supabase.auth) {
-            await supabase.auth.signOut();
-        }
-    } catch (error) {
-        console.error("Erreur lors de la déconnexion Supabase:", error);
-    } finally {
-        localStorage.removeItem('psi_mind_user');
-        // Clear Supabase local storage tokens as well if needed, 
-        // though signOut usually handles this.
-        window.location.href = 'index.html';
+    const supabase = window.supabaseClient;
+    if (supabase) {
+        await supabase.auth.signOut();
     }
+    localStorage.removeItem('psi_mind_user');
+    window.location.href = 'index.html';
 }
 
-// Guard: redirect to login if not authenticated on protected pages
+// Garde d'authentification : redirige vers login si non connecté
 function authGuard() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-
     if (PROTECTED_PAGES.includes(currentPage) && !isAuthenticated()) {
-        // Save the requested page so we can redirect after login
         localStorage.setItem('psi_mind_redirect', currentPage);
         window.location.href = 'login.html';
         return false;
@@ -113,52 +41,46 @@ function authGuard() {
     return true;
 }
 
-// Inject login/logout button into the navbar
+// Injection dynamique du bouton de connexion/déconnexion
 function injectAuthButton() {
     const nav = document.querySelector('nav');
     if (!nav) return;
 
-    // Remove existing auth container if any
-    const existing = document.querySelector('.auth-btn-container');
-    if (existing) existing.remove();
-
-    // Create auth button container
-    const authContainer = document.createElement('div');
-    authContainer.className = 'auth-btn-container';
+    let authContainer = document.querySelector('.auth-btn-container');
+    if (!authContainer) {
+        authContainer = document.createElement('div');
+        authContainer.className = 'auth-btn-container';
+        // Style inline pour l'intégration rapide
+        authContainer.style.marginLeft = '20px';
+        authContainer.style.display = 'flex';
+        authContainer.style.alignItems = 'center';
+        
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle) nav.insertBefore(authContainer, menuToggle);
+        else nav.appendChild(authContainer);
+    }
 
     if (isAuthenticated()) {
         const user = getCurrentUser();
-        const fullName = user.name;
-
         authContainer.innerHTML = `
-            <div class="auth-logged-in-wrapper">
-                <span class="auth-username">${fullName}</span>
-                <button class="auth-nav-btn auth-logout-btn" onclick="logoutUser()" title="Se déconnecter">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Déconnexion</span>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <span style="font-size:0.7rem; color:white; font-weight:bold; text-transform:uppercase;">${user.name}</span>
+                <button onclick="logoutUser()" class="auth-nav-btn" style="cursor:pointer; background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:4px 10px; border-radius:15px; font-size:0.8rem;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
                 </button>
             </div>
         `;
     } else {
         authContainer.innerHTML = `
-            <a href="login.html" class="auth-nav-btn auth-login-btn" title="Se connecter">
-                <i class="fa-solid fa-user"></i>
-                <span>Connexion</span>
+            <a href="login.html" class="auth-nav-btn" style="text-decoration:none; background:white; color:#00126e; padding:6px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem;">
+                <i class="fa-solid fa-user"></i> Connexion
             </a>
         `;
     }
-
-    // Insert before the menu toggle icon
-    const menuToggle = document.getElementById('menu-toggle');
-    if (menuToggle) {
-        nav.insertBefore(authContainer, menuToggle);
-    } else {
-        nav.appendChild(authContainer);
-    }
 }
 
-// Run auth guard and inject button on page load
-document.addEventListener('DOMContentLoaded', function () {
+// Initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
     if (authGuard()) {
         injectAuthButton();
     }
