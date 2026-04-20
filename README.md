@@ -65,7 +65,7 @@ Elle permet d’accéder facilement à des **cours**, **exercices corrigés** et
 - Django  
 
 ### Base de données
-- SQLite  
+- Supabase  
 
 ---
 
