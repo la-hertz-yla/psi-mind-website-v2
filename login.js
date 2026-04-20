@@ -1,14 +1,11 @@
-// ✅ Utiliser seulement le client déjà créé dans supabase.js
 const supabase = window.supabaseClient;
 
-// Rediriger si déjà connecté
 if (localStorage.getItem('psi_mind_user')) {
     const redirect = localStorage.getItem('psi_mind_redirect') || 'index.html';
     localStorage.removeItem('psi_mind_redirect');
     window.location.href = redirect;
 }
 
-// Particules flottantes
 function createLoginParticles() {
     const container = document.getElementById('loginParticles');
     if (!container) return;
@@ -27,7 +24,6 @@ function createLoginParticles() {
 }
 createLoginParticles();
 
-// Tabs
 function switchTab(tab) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -57,7 +53,6 @@ function showMessage(text, type) {
     msg.className = 'form-message ' + type;
 }
 
-// ✅ Inscription corrigée avec meilleur message selon confirmation email
 async function handleRegister(e) {
     e.preventDefault();
     const name = document.getElementById('register-name').value.trim();
@@ -85,22 +80,15 @@ async function handleRegister(e) {
 
         if (error) throw error;
 
-        // Si Supabase renvoie un utilisateur sans session = confirmation email requise
         if (data.user && !data.session) {
             showMessage('✅ Inscription réussie ! Vérifiez votre email pour confirmer votre compte.', 'success');
         } else if (data.session) {
-            // Confirmation email désactivée : connexion directe
             showMessage('✅ Inscription réussie ! Redirection...', 'success');
-            const sessionData = {
-                name: name,
-                email: data.user.email,
-                id: data.user.id
-            };
+            const sessionData = { name, email: data.user.email, id: data.user.id };
             localStorage.setItem('psi_mind_user', JSON.stringify(sessionData));
             setTimeout(() => { window.location.href = 'index.html'; }, 1200);
         }
     } catch (error) {
-        // Messages d'erreur traduits
         let msg = error.message;
         if (msg.includes('already registered') || msg.includes('already been registered')) {
             msg = 'Cet email est déjà utilisé. Essayez de vous connecter.';
@@ -114,7 +102,6 @@ async function handleRegister(e) {
     }
 }
 
-// Connexion
 async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim().toLowerCase();
@@ -153,10 +140,8 @@ async function handleLogin(e) {
     }
 }
 
-// ✅ togglePassword corrigé — ajoute les icônes manquantes dynamiquement
 function togglePassword(inputId, btn) {
     const input = document.getElementById(inputId);
-    // Créer l'icône si elle n'existe pas encore
     if (!btn.querySelector('i')) {
         const icon = document.createElement('i');
         icon.className = 'fa-solid fa-eye';
@@ -172,7 +157,6 @@ function togglePassword(inputId, btn) {
     }
 }
 
-// Menu Mobile
 const menuToggle = document.getElementById('menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
 if (menuToggle) {
@@ -183,11 +167,9 @@ if (mobileMenu) {
     mobileMenu.addEventListener('mouseleave', () => mobileMenu.classList.remove('active'));
 }
 
-// ✅ Theme toggle corrigé avec persistance localStorage
 const themeBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-toggle-icon');
 
-// Appliquer le thème sauvegardé au chargement
 if (localStorage.getItem('psi_mind_theme') === 'light') {
     document.body.classList.add('light-theme');
     if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
