@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="">
     <link rel="stylesheet" href="index3-1.css">
     <title>cours_info</title>
 </head>
@@ -18,6 +19,7 @@
                 <li><a href="#apropos">A propos</a></li>
                 <li><a href="#cours">Cours Intégral</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="profile.html">Profile</a></li>
             </ul>
             <div class="mobile-menu">
             <ul>
@@ -25,6 +27,7 @@
                 <li><a href="#apropos">A propos</a></li>
                 <li><a href="#cours">Cours Intégral</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="profile.html">Profile</a></li>
             </ul>
             </div>
             <i id="menu-toggle" class="fa-solid fa-bars"></i>
@@ -59,11 +62,20 @@
                     <div class="pdf-left">
                         <div class="pdf-icon">📄</div>
                         <div>
-                            <div class="pdf-name">Cours — Suites numériques</div>
-                            <div class="pdf-meta">PDF • Convergence, critères, limites</div>
+                            <div class="pdf-name">Cours — Courbes paramétrées</div>
+                            <div class="pdf-meta">PDF • Coordonnées polaires, coniques</div>
                         </div>
                     </div>
-                    <a href="pdfs/math/ch1-suites-cours.pdf" download class="btn-download">⬇ Télécharger</a>
+                    <div class="pdf-actions">
+                        <a href="pdfs/math/ch6-courbes-cours.pdf" download class="btn-download">
+                            ⬇ Télécharger
+                        </a>
+                        <button class="fav-btn"
+                            data-title="Cours — Courbes paramétrées"
+                        data-file="pdfs/math/ch6-courbes-cours.pdf">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    </div>
                 </div>
                 <div class="pdf-item">
                     <div class="pdf-left">
@@ -73,7 +85,16 @@
                             <div class="pdf-meta">PDF • Séries entières, rayon de convergence</div>
                         </div>
                     </div>
-                    <a href="pdfs/math/ch1-series-cours.pdf" download class="btn-download">⬇ Télécharger</a>
+                    <div class="pdf-actions">
+                        <a href="pdfs/math/ch6-courbes-cours.pdf" download class="btn-download">
+                            ⬇ Télécharger
+                        </a>
+                        <button class="fav-btn"
+                            data-title="Cours — Courbes paramétrées"
+                        data-file="pdfs/math/ch6-courbes-cours.pdf">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    </div>                
                 </div>
             </div>
         </div>
@@ -90,7 +111,16 @@
                             <div class="pdf-meta">PDF • Convergence, calcul par parties</div>
                         </div>
                     </div>
-                    <a href="pdfs/math/ch2-integrales-cours.pdf" download class="btn-download">⬇ Télécharger</a>
+                    <div class="pdf-actions">
+                        <a href="pdfs/math/ch6-courbes-cours.pdf" download class="btn-download">
+                            ⬇ Télécharger
+                        </a>
+                        <button class="fav-btn"
+                            data-title="Cours — Courbes paramétrées"
+                        data-file="pdfs/math/ch6-courbes-cours.pdf">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    </div>                
                 </div>
                 <div class="pdf-item">
                     <div class="pdf-left">
@@ -100,8 +130,17 @@
                             <div class="pdf-meta">PDF • Techniques d'intégration</div>
                         </div>
                     </div>
-                    <a href="pdfs/math/ch2-changement-cours.pdf" download class="btn-download">⬇ Télécharger</a>
-                </div>
+                    <div class="pdf-actions">
+                        <a href="pdfs/math/ch6-courbes-cours.pdf" download class="btn-download">
+                            ⬇ Télécharger
+                        </a>
+                        <button class="fav-btn"
+                        data-title="Cours — Courbes paramétrées"
+                        data-file="pdfs/math/ch6-courbes-cours.pdf">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    </div>               
+                 </div>
             </div>
         </div>
     
@@ -317,6 +356,11 @@
                         </div>
                     </div>
                     <a href="pdfs/math/ch6-courbes-cours.pdf" download class="btn-download">⬇ Télécharger</a>
+                    <button class="fav-btn"
+                        data-title="Cours — Suites numériques"
+                        data-file="pdfs/math/ch1-suites-cours.pdf">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
                 </div>
                 <div class="pdf-item">
                     <div class="pdf-left">
@@ -395,5 +439,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
     <script src="auth.js"></script>
+    <script src="profile.js"></script>
 </body>
 </html>

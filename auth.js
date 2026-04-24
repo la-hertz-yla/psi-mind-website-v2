@@ -40,12 +40,10 @@ function injectAuthStyles() {
 }
 injectAuthStyles();
 
-// ✅ Bug 2 corrigé — restaurer le thème dès le chargement, sur toutes les pages
 (function applyTheme() {
     const theme = localStorage.getItem('psi_mind_theme');
     if (theme === 'light') {
         document.body.classList.add('light-theme');
-        // Mettre à jour l'icône si elle existe (page login)
         const icon = document.getElementById('theme-toggle-icon');
         if (icon) icon.className = 'fa-solid fa-moon';
     }
@@ -67,7 +65,6 @@ function getCurrentUser() {
     return userData ? JSON.parse(userData) : null;
 }
 
-// ✅ Bug 3 corrigé — vérifier que supabaseClient existe avant de l'appeler
 async function logoutUser() {
     try {
         const client = window.supabaseClient;
@@ -79,12 +76,10 @@ async function logoutUser() {
     window.location.href = 'index.html';
 }
 
-// ✅ Bug 1 corrigé — gérer les URLs avec et sans .html (Vercel)
 function authGuard() {
     const path = window.location.pathname;
-    // Extrait "cours_math" depuis "/cours_math" ou "/cours_math.html"
     let pageName = path.split('/').pop() || 'index.html';
-    if (!pageName.includes('.')) pageName += '.html'; // Vercel supprime les extensions
+    if (!pageName.includes('.')) pageName += '.html'; 
 
     if (PROTECTED_PAGES.includes(pageName) && !isAuthenticated()) {
         localStorage.setItem('psi_mind_redirect', pageName);

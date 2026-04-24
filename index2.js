@@ -16,24 +16,6 @@ themeToggleBtn.onclick = function(){
     }
 };
 
-let moreinfo=document.getElementById("more-info");
-let btn=document.getElementById("learn-more");
-let lessinfos=document.getElementById("less-infos");
-let features=document.querySelector(".features");
-function savoirplus(){
-    if(moreinfo.style.display==="none"){
-        moreinfo.style.display="block";
-        btn.textContent="En savoir moins";
-        lessinfos.style.display="none";
-        features.style.display="none";
-    }
-    else{
-        moreinfo.style.display="none";
-        btn.textContent="En savoir plus";
-        lessinfos.style.display="block";
-        features.style.display="block";
-    }
-}
 
 let menuToggle=document.getElementById("menu-toggle");
 let nav=document.querySelector(".mobile-menu");

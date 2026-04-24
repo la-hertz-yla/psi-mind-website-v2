@@ -258,6 +258,29 @@
         color: rgba(255, 255, 255, 0.632);
     }
 
+    .fav-btn{
+        width:42px;
+        height:42px;
+        border:none;
+        border-radius:50%;
+        background:rgba(255,255,255,.1);
+        color:white;
+        cursor:pointer;
+        font-size:1rem;
+        transition:.3s;
+    }
+
+    .fav-btn:hover{
+        transform:scale(1.1);
+        background:rgba(255,255,255,0.25);
+    }
+
+    .active-heart {
+        color: red !important;
+    }
+
+
+
     .btn-download {
         display: inline-flex;
         align-items: center;
@@ -509,6 +532,25 @@
         background: rgba(220, 50, 50, 0.1);
         border-color: rgba(220, 50, 50, 0.25);
     }
+
+    .light-theme .fav-btn {
+        width:42px;
+        height:42px;
+        border:none;
+        border-radius:50%;
+        background:rgba(45, 89, 250, 0.1);
+        color:rgb(128, 83, 252);
+        cursor:pointer;
+        font-size:1rem;
+        transition:.3s;
+    }
+
+    .light-theme .fav-btn.active {
+        background: #ffa1a1;
+        border-color: #ff5252;
+        color:white;
+    }
+
 
     .light-theme .btn-download {
         background: rgba(0, 40, 180, 0.9);

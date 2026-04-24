@@ -1,4 +1,4 @@
-html{
+    html{
     font-size: 90%;
     }
 
@@ -13,11 +13,8 @@ html{
             width: 111.11%;
         }
     }
-
-
-
-
-* { 
+    
+    * { 
         margin:0;
         padding: 0; 
         box-sizing: border-box; 
@@ -502,7 +499,7 @@ html{
     }
 }
 
-/* ===== LIGHT MODE ===== */
+/* LIGHT MODE  */
     .light-theme {
         background-image: linear-gradient(to right, rgba(105, 147, 253, 0.719), rgba(214, 200, 255, 0.685)),
         url(img/dc697692968212cd59b41587fd916394.jpg) !important;
