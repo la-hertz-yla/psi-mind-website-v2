@@ -65,9 +65,13 @@ Elle permet d’accéder facilement à des **cours**, **exercices corrigés** et
 - Django  
 
 ### Base de données
-- SQLite  
+- Supabase  
 
 ---
+
+## Visite du site
+
+https://psi-mind-website-v2.vercel.app
 
 ##  Installation et lancement
 
@@ -75,3 +79,6 @@ Elle permet d’accéder facilement à des **cours**, **exercices corrigés** et
 ```bash
 git clone https://github.com/la-hertz-yla/psi-mind-website-v2
 cd psi-mind-website-v2
+
+
+
