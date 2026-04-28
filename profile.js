@@ -126,7 +126,7 @@ document.querySelectorAll("a[href='#contact']").forEach(function(link){
                 filiere:    getValue('filiere'),
                 prepa_name: getValue('prepa_name'),
                 phone:      getValue('phone'),
-                updated_at: new Date().toISOString()
+                created_at: new Date().toISOString(),
             };
 
             const { error } = await client
