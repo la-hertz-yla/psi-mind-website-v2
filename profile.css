@@ -316,8 +316,16 @@
 }
 
 .light-theme #saveProfile{
-    background:rgba(0, 6, 174, 0.7);
+    background:rgba(0, 3, 88, 0.7);
+    color : rgb(5, 0, 31);
 }
+.light-theme #saveProfile:hover{
+    background:rgba(0, 3, 88, 0.9);
+    color:white;
+}
+
+
+
 
 
 /* MOBILE MENU */
