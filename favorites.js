@@ -1,7 +1,6 @@
 /**
  * favorites.js
  * À inclure dans toutes les pages de cours (cours_math.html, cours_physique.html, etc.)
- * ET dans profile.html
  * Dépendances : supabase.js chargé avant ce fichier
  */
 
@@ -13,13 +12,14 @@
     const { data: { session } } = await client.auth.getSession();
     const userId = session?.user?.id ?? null;
 
-    // ── 2. Charger les favoris existants (si connecté) ────────────────────────
-    let userFavorites = new Set(); // contient les pdf_id déjà en favori
+    // ── 2. Charger les favoris de CET utilisateur uniquement ──────────────────
+    let userFavorites = new Set();
 
     if (userId) {
         const { data, error } = await client
             .from('favorites')
-            .select('pdf_id');
+            .select('pdf_id')
+            .eq('user_id', userId); // ← correction : filtrer par user_id
 
         if (error) {
             console.error('[Favorites] Erreur chargement favoris :', error.message);
@@ -32,23 +32,28 @@
     const buttons = document.querySelectorAll('.fav-btn');
 
     buttons.forEach(btn => {
-        const pdfId   = btn.dataset.file;   // identifiant unique = chemin du fichier
-        const title   = btn.dataset.title;
-        const pdfLink = btn.dataset.file;
-        const icon    = btn.querySelector('i');
+        const pdfId  = btn.dataset.file;
+        const title  = btn.dataset.title;
+        const icon   = btn.querySelector('i');
 
         if (!pdfId || !icon) return;
 
-        // Colorier en rouge si déjà en favori
+        // ── Appliquer l'état initial (rouge si déjà en favori) ────────────────
         if (userFavorites.has(pdfId)) {
             icon.className = 'fa-solid fa-heart';
+            icon.style.color = '#ff4444';
             btn.classList.add('active');
+        } else {
+            icon.className = 'fa-regular fa-heart';
+            icon.style.color = '';
+            btn.classList.remove('active');
         }
 
         // ── Clic sur le bouton heart ──────────────────────────────────────────
         btn.addEventListener('click', async () => {
+
+            // Rediriger si non connecté
             if (!userId) {
-                // Rediriger vers login si non connecté
                 localStorage.setItem('psi_mind_redirect', window.location.pathname.split('/').pop());
                 window.location.href = 'login.html';
                 return;
@@ -71,6 +76,7 @@
 
                 userFavorites.delete(pdfId);
                 icon.className = 'fa-regular fa-heart';
+                icon.style.color = '';
                 btn.classList.remove('active');
 
             } else {
@@ -81,7 +87,7 @@
                         user_id:  userId,
                         pdf_id:   pdfId,
                         title:    title,
-                        pdf_link: pdfLink
+                        pdf_link: pdfId
                     });
 
                 if (error) {
@@ -91,6 +97,7 @@
 
                 userFavorites.add(pdfId);
                 icon.className = 'fa-solid fa-heart';
+                icon.style.color = '#ff4444';
                 btn.classList.add('active');
             }
         });
