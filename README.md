@@ -60,10 +60,6 @@ Elle permet d’accéder facilement à des **cours**, **exercices corrigés** et
 - CSS3  
 - JavaScript  
 
-### Backend
-- Python  
-- Django  
-
 ### Base de données
 - Supabase  
 
@@ -71,7 +67,7 @@ Elle permet d’accéder facilement à des **cours**, **exercices corrigés** et
 
 ## Visite du site
 
-https://psi-mind-website-v2.vercel.app
+https://psi-mind.vercel.app
 
 ##  Installation et lancement
 
