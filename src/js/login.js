@@ -188,11 +188,14 @@ if (themeBtn) {
     };
 }
 
-const form = document.getElementById('loginForm');
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+    registerForm.addEventListener('submit', handleRegister);
+}
 
-    const email =document.querySelector('#login-email').value;
-    const password = document.querySelector('#login-password').value;
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.addEventListener('submit', handleLogin);
+}
 
     
