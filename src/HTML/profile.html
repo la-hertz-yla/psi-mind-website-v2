@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil | PSI-MIND</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="../css/profile.css">
+
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">PSI-MIND</div>
+    <ul>
+      <li><a href="index.html#accueil">Accueil</a></li>
+      <li><a href="index.html#apropos">A propos</a></li>
+      <li><a href="index.html#cours">Cours Intégral</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <div class="mobile-menu">
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#apropos">A propos</a></li>
+        <li><a href="#cours">Cours Intégral</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+    </div>
+    <i id="menu-toggle" class="fa-solid fa-bars"></i>
+  </nav>
+
+  <div class="theme-toggle-bar">
+    <button id="theme-toggle" class="theme-btn" title="Toggle Light/Dark Mode">
+      <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+    </button>
+  </div>
+
+<section class="profile-page">
+
+    <div class="profile-card">
+        <h2>Mon Profil</h2>
+
+        <div class="avatar">
+            <i class="fa-solid fa-user-graduate"></i>
+        </div>
+
+        <div class="field">
+            <label for="full_name">Nom complet</label>
+            <input type="text" id="full_name" placeholder="Votre nom">
+        </div>
+
+        <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="votre@email.com">
+        </div>
+
+        <div class="field">
+            <label for="filiere">Filière</label>
+            <input type="text" id="filiere" placeholder="Ex: PSI">
+        </div>
+
+        <div class="field">
+            <label for="prepa_name">Prépa</label>
+            <input type="text" id="prepa_name" placeholder="Ex: Reda Slaoui">
+        </div>
+
+        <div class="field">
+            <label for="phone">Téléphone</label>
+            <input type="text" id="phone" placeholder="+212 600 00 00 00">
+        </div>
+
+        <button id="saveProfile">Sauvegarder</button>
+    </div>
+
+
+    <div class="favorites-card">
+        <h2>Mes Favoris</h2>
+        <div id="favoritesList"></div>
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2025 PSI-MIND. Tous droits réservés. LAYLA CHMOURK</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/profile.js"></script>
+<script src="../js/favorites.js"></script>
+
+</body>
+</html>
