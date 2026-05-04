@@ -115,6 +115,8 @@
     .auth-btn-container {
         display: flex;
         align-items: center;
+        margin-left: auto;
+        gap: 10px;
     }
     /* light mode */
 

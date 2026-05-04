@@ -1,40 +1,67 @@
-let themeToggleBtn=document.getElementById("theme-toggle"); 
-let icon=document.getElementById("theme-toggle-icon");
-let themeText=document.getElementById("theme-text");
-let heroTitle=document.querySelector(".hero-content h1");
-let heroparagraph=document.querySelector(".hero-content p");
-let stats=document.querySelectorAll("#stats div");
-let statsparagraphs=document.querySelectorAll("#stats div p");
-themeToggleBtn.onclick=function(){
-    if(icon.classList.contains("fa-sun")){
-        document.body.classList.add("light-theme");
-        heroTitle.classList.add("text-light");
-        heroparagraph.classList.add("text-light");
-        statsparagraphs[0].classList.add("stats-text-light");
-        statsparagraphs[1].classList.add("stats-text-light");
-        statsparagraphs[2].classList.add("stats-text-light");
-        stats[0].classList.add("stats-light");
-        stats[1].classList.add("stats-light");
-        stats[2].classList.add("stats-light");
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
-        themeText.textContent = "Dark Mode";
+let themeToggleBtn = document.getElementById("theme-toggle");
+let icon = document.getElementById("theme-toggle-icon");
+let themeText = document.getElementById("theme-text");
+let heroTitle = document.querySelector(".hero-content h1");
+let heroparagraph = document.querySelector(".hero-content p");
+let stats = document.querySelectorAll("#stats div");
+let statsparagraphs = document.querySelectorAll("#stats div p");
+
+// Fonction pour appliquer les classes spécifiques au thème
+function applyThemeClasses(isLight) {
+    if (isLight) {
+        if (heroTitle) heroTitle.classList.add("text-light");
+        if (heroparagraph) heroparagraph.classList.add("text-light");
+        statsparagraphs.forEach(p => p.classList.add("stats-text-light"));
+        stats.forEach(stat => stat.classList.add("stats-light"));
+        if (themeText) themeText.textContent = "Dark Mode";
+    } else {
+        if (heroTitle) heroTitle.classList.remove("text-light");
+        if (heroparagraph) heroparagraph.classList.remove("text-light");
+        statsparagraphs.forEach(p => p.classList.remove("stats-text-light"));
+        stats.forEach(stat => stat.classList.remove("stats-light"));
+        if (themeText) themeText.textContent = "Light Mode";
     }
-    else{
-        document.body.classList.remove("light-theme");
-        heroTitle.classList.remove("text-light");
-        heroparagraph.classList.remove("text-light");
-        statsparagraphs[0].classList.remove("stats-text-light");
-        statsparagraphs[1].classList.remove("stats-text-light");
-        statsparagraphs[2].classList.remove("stats-text-light");
-        stats[0].classList.remove("stats-light");
-        stats[1].classList.remove("stats-light");
-        stats[2].classList.remove("stats-light");   
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
-        themeText.textContent = "Light Mode";
+}
+
+// Appliquer le thème sauvegardé au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('psi_mind_theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        if (icon) {
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+        }
+        applyThemeClasses(true);
+    } else {
+        if (icon) {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+        }
+        applyThemeClasses(false);
     }
-};
+});
+
+// Gestionnaire d'événement pour le bouton de thème
+if (themeToggleBtn) {
+    themeToggleBtn.onclick = function() {
+        const isLight = document.body.classList.toggle('light-theme');
+        if (isLight) {
+            if (icon) {
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
+            }
+            localStorage.setItem('psi_mind_theme', 'light');
+        } else {
+            if (icon) {
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
+            }
+            localStorage.setItem('psi_mind_theme', 'dark');
+        }
+        applyThemeClasses(isLight);
+    };
+}
 
 let moreinfo=document.getElementById("more-info");
 let btn=document.getElementById("learn-more");
